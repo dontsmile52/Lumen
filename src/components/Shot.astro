@@ -1,0 +1,41 @@
+---
+// A screenshot of Lumen in a soft frame, or, until there is one, a placeholder that says what goes there.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src?: ImageMetadata;
+  alt: string;
+  /** What to put here, for a placeholder. */
+  todo?: string;
+  /** Width / height of the placeholder. */
+  ratio?: string;
+  eager?: boolean;
+  sizes?: string;
+  class?: string;
+}
+const { src, alt, todo, ratio = '16 / 10', eager = false, sizes = '(min-width: 1152px) 1100px, 100vw', class: className = '' } = Astro.props;
+---
+{src ? (
+  <figure class:list={['overflow-hidden rounded-2xl shadow-[0_40px_120px_-40px_rgb(0_0_0/0.65)] ring-1 ring-border', className]}>
+    <Image
+      src={src}
+      alt={alt}
+      widths={[480, 800, 1200, 1800, 2400]}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      class="block h-auto w-full"
+    />
+  </figure>
+) : (
+  <figure
+    class:list={['grid place-items-center rounded-2xl border-2 border-dashed border-border bg-muted p-6 text-center', className]}
+    style={`aspect-ratio: ${ratio}`}
+  >
+    <figcaption class="max-w-md text-sm text-muted-foreground">
+      <span class="block font-medium text-foreground">{alt}</span>
+      {todo && <span class="mt-1 block">Заглушка: {todo}</span>}
+    </figcaption>
+  </figure>
+)}

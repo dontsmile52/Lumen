@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Prose from '../components/Prose.astro';
+import { SITE } from '../config';
+import lumik from '../assets/lumik.svg?url';
+
+const button = 'rounded-lg bg-secondary px-3 py-1.5 font-medium';
+const pressed = 'rounded-lg bg-[#0064d2] px-3 py-1.5 font-medium text-white outline-3 outline-offset-2 outline-primary';
+---
+<Base title="Как открыть Lumen при первом запуске — Lumen" description="Пошаговая инструкция: как открыть Lumen на macOS 26 Tahoe, если система пишет, что не может проверить приложение.">
+  <Prose title="Как открыть Lumen при первом запуске" lead="Lumen пока подписан нашим собственным сертификатом, а не сертификатом Apple, поэтому при первом запуске macOS 26 Tahoe спросит, доверяете ли вы ему. Это нужно сделать один раз — дальше Lumen открывается как обычно и обновляется сам.">
+    <ol class="grid gap-5 [counter-reset:step]">
+      <li class="install-step">
+        <h2>Установите Lumen</h2>
+        <p>Откройте скачанный файл <b>Lumen.dmg</b> и перетащите значок Lumen на папку <b>Applications</b> («Программы») в том же окне. Нет файла? <a class="text-brand underline underline-offset-4" href={SITE.download} data-goal="download_click">Скачать Lumen</a>.</p>
+      </li>
+      <li class="install-step">
+        <h2>Откройте Lumen и нажмите «Готово»</h2>
+        <p>Откройте папку «Программы» и дважды щёлкните Lumen. macOS покажет окно о том, что не может проверить приложение. Нажмите <b>«Готово»</b> — не «Переместить в Корзину».</p>
+        <div class="mock text-center" role="img" aria-label="Окно macOS: программа «Lumen» не открыта. Кнопки «Готово» и «Переместить в Корзину».">
+          <img src={lumik} alt="" width="56" height="56" class="mx-auto mb-2" />
+          <strong class="block">Программа «Lumen» не открыта</strong>
+          <span class="mt-1 block text-muted-foreground">Apple не удалось подтвердить, что «Lumen» не содержит вредоносного ПО.</span>
+          <span class="mt-4 grid gap-2"><span class={pressed}>Готово</span><span class={button}>Переместить в Корзину</span></span>
+        </div>
+      </li>
+      <li class="install-step">
+        <h2>Откройте «Конфиденциальность и безопасность»</h2>
+        <p>Меню Apple в левом верхнем углу экрана → <b>Системные настройки…</b> → <b>Конфиденциальность и безопасность</b>.</p>
+      </li>
+      <li class="install-step">
+        <h2>Нажмите «Всё равно открыть»</h2>
+        <p>Прокрутите страницу вниз до раздела <b>«Безопасность»</b>. Там будет строка о том, что Lumen заблокирован. Нажмите рядом с ней <b>«Всё равно открыть»</b>.</p>
+        <div class="mock" role="img" aria-label="Раздел «Безопасность» в Системных настройках: строка о блокировке Lumen и кнопка «Всё равно открыть».">
+          <span class="mb-3 block text-xs font-semibold tracking-wider text-muted-foreground uppercase">Безопасность</span>
+          <span class="flex flex-wrap items-center justify-between gap-3"><span class="flex-[1_1_14rem]">Программа «Lumen» заблокирована, так как её разработчик не подтверждён.</span><span class={pressed}>Всё равно открыть</span></span>
+        </div>
+        <p class="text-sm text-muted-foreground">Кнопка появляется только после попытки открыть Lumen (шаг 2) и держится около часа. Если её нет — повторите шаг 2.</p>
+      </li>
+      <li class="install-step">
+        <h2>Подтвердите</h2>
+        <p>Введите пароль от Mac или приложите палец к Touch ID, затем в новом окне ещё раз нажмите <b>«Всё равно открыть»</b>.</p>
+      </li>
+      <li class="install-step">
+        <h2>Готово</h2>
+        <p>Lumen запустится, и Люмик вылетит из чёлки, чтобы всё показать. Больше ничего подтверждать не нужно: обновления Lumen скачивает и ставит сам.</p>
+      </li>
+    </ol>
+    <section class="mt-10 rounded-2xl border border-primary/40 bg-accent p-6">
+      <h2 class="text-lg font-semibold" style="font-family: var(--font-sans)">Почему так</h2>
+      <p class="mt-2 text-muted-foreground">Apple проверяет приложения, подписанные сертификатом Apple Developer. У Lumen пока свой сертификат: подпись стабильная, и разрешения вроде «Универсального доступа» не слетают при обновлениях, но macOS один раз спрашивает, доверяете ли вы разработчику.</p>
+      <p class="mt-2 text-muted-foreground">Не получается? Напишите в Telegram <a class="text-brand underline underline-offset-4" href={SITE.telegram}>{SITE.telegramName}</a> — поможем.</p>
+    </section>
+  </Prose>
+</Base>
+
+<style>
+  .install-step { counter-increment: step; position: relative; border: 1px solid var(--border); background: var(--card); border-radius: 1.25rem; padding: 1.4rem 1.4rem 1.4rem 4.5rem; }
+  .install-step::before { content: counter(step); position: absolute; left: 1.25rem; top: 1.25rem; width: 2.1rem; height: 2.1rem; border-radius: 999px; display: grid; place-items: center; background: var(--primary); color: var(--primary-foreground); font-weight: 700; }
+  .install-step h2 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .install-step p + * { margin-top: 0.75rem; }
+  .mock { display: block; max-width: 26rem; margin-top: 1rem; border-radius: 1rem; border: 1px solid var(--border); background: var(--popover); padding: 1.1rem; font-size: 0.9rem; box-shadow: var(--shadow-soft); }
+  @media (max-width: 30rem) {
+    .install-step { padding: 4rem 1.1rem 1.1rem; }
+    .install-step::before { left: 1.1rem; top: 1.1rem; }
+  }
+</style>

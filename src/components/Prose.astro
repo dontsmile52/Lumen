@@ -1,0 +1,14 @@
+---
+// A plain page: a title with Lumik, the text under it.
+import Lumik from './Lumik.astro';
+interface Props { title: string; lead?: string; sleepy?: boolean }
+const { title, lead, sleepy = false } = Astro.props;
+---
+<div class="section max-w-3xl pt-14 sm:pt-20">
+  <div class="flex items-center gap-4">
+    <Lumik id="page-lumik" size={60} sleepy={sleepy} />
+    <h1 class="text-3xl leading-tight font-bold sm:text-4xl">{title}</h1>
+  </div>
+  {lead && <p class="mt-5 text-lg text-muted-foreground">{lead}</p>}
+  <div class="mt-10"><slot /></div>
+</div>

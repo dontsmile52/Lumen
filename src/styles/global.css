@@ -1,0 +1,139 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/unbounded/500.css";
+@import "@fontsource/unbounded/700.css";
+@import "@fontsource/golos-text/400.css";
+@import "@fontsource/golos-text/500.css";
+@import "@fontsource/golos-text/600.css";
+
+/* Dark by default; light when the system asks for it. Shusti colours: black and orange #FF8A1F. */
+@custom-variant dark (@media not (prefers-color-scheme: light));
+
+:root {
+  --background: #08080a;
+  --foreground: #f4f4f6;
+  --card: rgb(255 255 255 / 0.045);
+  --card-foreground: #f4f4f6;
+  --popover: #121215;
+  --popover-foreground: #f4f4f6;
+  --primary: #ff8a1f;
+  --primary-foreground: #120a02;
+  --secondary: rgb(255 255 255 / 0.08);
+  --secondary-foreground: #f4f4f6;
+  --muted: rgb(255 255 255 / 0.06);
+  --muted-foreground: #a3a3ad;
+  --accent: rgb(255 138 31 / 0.14);
+  --accent-foreground: #ffb877;
+  --destructive: #ef4444;
+  --border: rgb(255 255 255 / 0.09);
+  --input: rgb(255 255 255 / 0.12);
+  --ring: #ff8a1f;
+  --radius: 1rem;
+  /* Orange as text: brighter on black, deeper on white, readable on both. */
+  --brand-text: #ffa04d;
+  --glass: rgb(22 22 26 / 0.62);
+  --glass-edge: rgb(255 255 255 / 0.1);
+  --shadow-soft: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 24px 60px -20px rgb(0 0 0 / 0.7);
+  --glow: rgb(255 138 31 / 0.22);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #f6f5f3;
+    --foreground: #141416;
+    --card: rgb(255 255 255 / 0.75);
+    --card-foreground: #141416;
+    --popover: #ffffff;
+    --popover-foreground: #141416;
+    --primary: #ff8a1f;
+    --primary-foreground: #120a02;
+    --secondary: rgb(0 0 0 / 0.06);
+    --secondary-foreground: #141416;
+    --muted: rgb(0 0 0 / 0.04);
+    --muted-foreground: #5b5b66;
+    --accent: rgb(255 138 31 / 0.14);
+    --accent-foreground: #9a4205;
+    --border: rgb(0 0 0 / 0.08);
+    --input: rgb(0 0 0 / 0.12);
+    --brand-text: #b04c05;
+    --glass: rgb(255 255 255 / 0.68);
+    --glass-edge: rgb(255 255 255 / 0.9);
+    --shadow-soft: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 24px 60px -24px rgb(30 20 10 / 0.25);
+    --glow: rgb(255 138 31 / 0.18);
+    color-scheme: light;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand-text);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --font-sans: "Golos Text", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Unbounded", "Golos Text", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  ::selection { background: rgb(255 138 31 / 0.35); }
+}
+
+@layer components {
+  /* Tahoe glass: translucent, blurred, a bright hairline on top, a soft long shadow. */
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-edge);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+  }
+  .eyebrow { @apply text-sm font-medium tracking-wide text-brand; }
+  .section { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+}
+
+/* Lumik blinks now and then; asleep he only breathes. */
+@keyframes lumik-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+@keyframes lumik-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.lumik-eyes { transform-box: fill-box; transform-origin: center; animation: lumik-blink 5.5s infinite; }
+.lumik-float { animation: lumik-float 6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import Prose from '../components/Prose.astro';
+import { buttonVariants } from '@/components/ui/button';
+---
+<Base title="Страница не найдена — Lumen" description="Такой страницы нет на сайте Lumen." noindex>
+  <Prose title="Такой страницы нет" lead="Люмик поискал везде — и уснул. Наверное, ссылка устарела." sleepy>
+    <a href="/" class={buttonVariants({ size: 'pill-sm' })}>На главную</a>
+  </Prose>
+</Base>

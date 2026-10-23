@@ -1,0 +1,54 @@
+---
+// Lumik from design/lumik.svg and design/lumik-sleep.svg (copies in src/assets — keep them the same as design/).
+// Inlined so he can blink: awake, his eyes close for a moment every few seconds; `sleepy` shows him asleep until hovered.
+import awakeSource from '../assets/lumik.svg?raw';
+import asleepSource from '../assets/lumik-sleep.svg?raw';
+
+interface Props {
+  /** Unique on the page: the drawings' gradient ids are prefixed with it. */
+  id: string;
+  size: number;
+  /** Asleep, waking up while the pointer is over him (or his `group`). */
+  sleepy?: boolean;
+  class?: string;
+}
+const { id, size, sleepy = false, class: className = '' } = Astro.props;
+
+function inline(source: string, eyes: boolean) {
+  let svg = source
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/id="(\w+)"/g, `id="${id}-$1"`)
+    .replace(/url\(#(\w+)\)/g, `url(#${id}-$1)`)
+    .replace(/width="256" height="256"/, `width="${size}" height="${size}" aria-hidden="true" focusable="false"`);
+  if (eyes) {
+    // The six shapes of the open eyes, whites to highlights, become one group that blinks.
+    const start = svg.indexOf('<ellipse cx="20" cy="31"');
+    const lastHighlight = svg.indexOf('<circle cx="31.1" cy="30.2"');
+    const end = svg.indexOf('/>', lastHighlight) + 2;
+    svg = svg.slice(0, start) + '<g class="lumik-eyes">' + svg.slice(start, end) + '</g>' + svg.slice(end);
+  }
+  return svg;
+}
+const awake = inline(awakeSource, true);
+const asleep = sleepy ? inline(asleepSource, false) : '';
+---
+<span
+  class:list={['lumik relative inline-block shrink-0', sleepy && 'lumik-sleepy', className]}
+  style={`width:${size}px;height:${size}px`}
+  role="img"
+  aria-label="Люмик"
+>
+  <span class="lumik-awake absolute inset-0" set:html={awake} />
+  {sleepy && <span class="lumik-asleep absolute inset-0" set:html={asleep} />}
+</span>
+
+<style>
+  .lumik-awake, .lumik-asleep { transition: opacity 0.35s ease, transform 0.35s ease; }
+  .lumik-sleepy .lumik-awake { opacity: 0; transform: scale(0.92); }
+  .lumik-sleepy .lumik-asleep { opacity: 1; }
+  /* Wakes up under the pointer, on his own or on the notch he sits in. */
+  .lumik-sleepy:hover .lumik-awake, :global(.group:hover) .lumik-sleepy .lumik-awake,
+  :global(.group:focus-visible) .lumik-sleepy .lumik-awake { opacity: 1; transform: scale(1); }
+  .lumik-sleepy:hover .lumik-asleep, :global(.group:hover) .lumik-sleepy .lumik-asleep,
+  :global(.group:focus-visible) .lumik-sleepy .lumik-asleep { opacity: 0; }
+</style>

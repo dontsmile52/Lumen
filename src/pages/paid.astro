@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Prose from '../components/Prose.astro';
+import { SITE } from '../config';
+---
+<Base title="Спасибо за покупку — Lumen" description="Оплата Lumen Pro прошла: возвращайтесь в Lumen, Pro включится сам." noindex>
+  <Prose title="Спасибо! Возвращайтесь в Lumen" lead="Если оплата прошла, Lumen включит Pro сам в течение минуты — вводить ничего не нужно. Ключ на всякий случай придёт на почту, которую вы указали.">
+    <section class="rounded-2xl border border-border bg-card p-6">
+      <h2 class="text-lg font-semibold" style="font-family: var(--font-sans)">Pro не включился?</h2>
+      <p class="mt-2 text-muted-foreground">Откройте настройки Lumen (клик по чёлке или ⌘,) → «Лицензия»: там видно, ждёт ли Lumen оплату. Если платёж не прошёл, его можно повторить. Ключ из письма вводится там же.</p>
+      <p class="mt-2 text-muted-foreground">Вопросы — в Telegram <a class="text-brand underline underline-offset-4" href={SITE.telegram}>{SITE.telegramName}</a>.</p>
+    </section>
+  </Prose>
+</Base>

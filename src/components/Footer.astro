@@ -1,0 +1,19 @@
+---
+import { SITE } from '../config';
+const year = new Date().getFullYear();
+---
+<footer class="mt-24 border-t border-border">
+  <div class="section grid gap-8 py-12 text-sm text-muted-foreground sm:grid-cols-[1.4fr_1fr]">
+    <div class="space-y-2">
+      <p class="text-foreground"><span style="font-family: var(--font-display)" class="font-semibold">Lumen</span> by Shusti</p>
+      <p>Продавец: {SITE.seller}, самозанятый, ИНН {SITE.inn}</p>
+      <p>Поддержка: Telegram <a class="text-brand underline underline-offset-4" href={SITE.telegram}>{SITE.telegramName}</a></p>
+      <p>© {year} Lumen. macOS и Mac — товарные знаки Apple Inc.</p>
+    </div>
+    <ul class="space-y-2 sm:justify-self-end">
+      <li><a class="hover:text-foreground" href="/install">Как открыть Lumen при первом запуске</a></li>
+      <li><a class="hover:text-foreground" href="/offer">Публичная оферта</a></li>
+      <li><a class="hover:text-foreground" href="/privacy">Политика конфиденциальности</a></li>
+    </ul>
+  </div>
+</footer>

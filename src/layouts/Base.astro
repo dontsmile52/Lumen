@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+import golos from '@fontsource/golos-text/files/golos-text-cyrillic-400-normal.woff2?url';
+import unbounded from '@fontsource/unbounded/files/unbounded-cyrillic-700-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Pages other than the home page have a simpler header. */
+  home?: boolean;
+  noindex?: boolean;
+}
+const { title, description, home = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const image = new URL('/og.jpg', Astro.site);
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={golos} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={unbounded} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f5f3" media="(prefers-color-scheme: light)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Lumen" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" type="application/rss+xml" title="Обновления Lumen" href="/appcast.xml" />
+    <!-- Yandex Metrika: calls are queued at once; the tag itself (and its cookies) loads at the visitor's first scroll,
+         click or key press, or after 10 s, so it never competes with the page itself. -->
+    <script is:inline define:vars={{ counter: SITE.metrika }}>
+      window.ym = window.ym || function () { (window.ym.a = window.ym.a || []).push(arguments); };
+      window.ym.l = Date.now();
+      window.ym(counter, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true });
+      const load = () => {
+        const tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://mc.yandex.ru/metrika/tag.js';
+        document.head.appendChild(tag);
+      };
+      let loaded = false;
+      const once = () => {
+        if (loaded) return;
+        loaded = true;
+        load();
+      };
+      for (const type of ['scroll', 'pointerdown', 'keydown', 'touchstart']) addEventListener(type, once, { once: true, passive: true });
+      addEventListener('load', () => setTimeout(once, 10000));
+      // Goals: any link or button with data-goal (download_click, buy_click).
+      document.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-goal]') : null;
+        if (target) window.ym(counter, 'reachGoal', target.getAttribute('data-goal'));
+      });
+    </script>
+  </head>
+  <body class="min-h-dvh overflow-x-clip">
+    <noscript><div><img src={`https://mc.yandex.ru/watch/${SITE.metrika}`} style="position:absolute;left:-9999px" alt="" /></div></noscript>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">К содержимому</a>
+    <Header home={home} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

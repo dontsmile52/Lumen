@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256">
+  <!-- Lumen app icon, direction A "Светящаяся ячейка": 3x3 app grid, the center cell is light -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1F2640"/>
+      <stop offset="1" stop-color="#0A0D18"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#FFF7DA"/>
+      <stop offset="0.4" stop-color="#FFC94D"/>
+      <stop offset="1" stop-color="#FFC94D" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="url(#bg)"/>
+  <g fill="#FFFFFF" fill-opacity="0.16">
+    <rect x="44" y="44" width="44" height="44" rx="12"/>
+    <rect x="106" y="44" width="44" height="44" rx="12"/>
+    <rect x="168" y="44" width="44" height="44" rx="12"/>
+    <rect x="44" y="106" width="44" height="44" rx="12"/>
+    <rect x="168" y="106" width="44" height="44" rx="12"/>
+    <rect x="44" y="168" width="44" height="44" rx="12"/>
+    <rect x="106" y="168" width="44" height="44" rx="12"/>
+    <rect x="168" y="168" width="44" height="44" rx="12"/>
+  </g>
+  <circle cx="128" cy="128" r="50" fill="url(#glow)"/>
+  <circle cx="128" cy="128" r="17" fill="#FFF7DA"/>
+</svg>
