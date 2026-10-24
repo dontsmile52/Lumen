@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Sparkle feed of Lumen, served at https://dontsmile52.github.io/Lumen/appcast.xml.
+<!-- Sparkle feed of Lumen, served at https://lumen.shusti.ru/appcast.xml.
      scripts/release.sh adds an <item> for each release; the newest goes first. -->
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Lumen</title>
-    <link>https://dontsmile52.github.io/Lumen/appcast.xml</link>
+    <link>https://lumen.shusti.ru/appcast.xml</link>
     <description>Обновления Lumen</description>
     <language>ru</language>
   </channel>
