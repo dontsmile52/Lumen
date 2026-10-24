@@ -1,0 +1,54 @@
+---
+// The notch of a MacBook Pro, close up and drawn, not photographed: measured from a screenshot of Lumen
+// (the island 253 × 33 pt with Lumik in the 34 pt band on its left, as in NotchView), the menu bar left out,
+// the background the test wallpaper of the screenshots. Vector, so it stays sharp at any size; Lumik wakes under the pointer.
+import { lumikAsleep, lumikAwake } from '../lib/lumik';
+
+const frame = { width: 320, height: 80 };
+const island = { width: 253, height: 33, radius: 13 };
+const x0 = (frame.width - island.width) / 2, x1 = x0 + island.width, h = island.height, r = island.radius;
+const k = 0.62;  // a little past a circle's 0.55: the softer, continuous corner of macOS
+const path = [
+  `M${x0} 0H${x1}V${h - r}`,
+  `C${x1} ${h - r + r * k} ${x1 - r + r * k} ${h} ${x1 - r} ${h}`,
+  `H${x0 + r}`,
+  `C${x0 + r - r * k} ${h} ${x0} ${h - r + r * k} ${x0} ${h - r}Z`,
+].join('');
+const lumik = { x: x0 + (34 - 22) / 2, y: (h - 22) / 2, size: 22 };
+const place = `x="${lumik.x}" y="${lumik.y}" width="${lumik.size}" height="${lumik.size}"`;
+const awake = lumikAwake('closeup-lumik', place).replace('<svg', '<svg class="closeup-awake"');
+const asleep = lumikAsleep('closeup-lumik', place).replace('<svg', '<svg class="closeup-asleep"');
+---
+<figure class="closeup">
+  <div class="max-h-44 overflow-hidden rounded-2xl shadow-[0_40px_120px_-40px_rgb(0_0_0/0.65)] ring-1 ring-border sm:max-h-none">
+  <!-- About 3.5× on a wide screen; a phone shows the left of the notch, with Lumik, at the same scale. -->
+  <svg viewBox={`0 0 ${frame.width} ${frame.height}`} class="block h-auto w-[340%] max-w-none -ml-[22.8%] sm:ml-0 sm:w-full" role="img" aria-label="Чёлка MacBook крупно: слева в ней спит Люмик">
+    <defs>
+      <!-- The test wallpaper at the top middle of the screen: a deep blue, lighter to the right. -->
+      <linearGradient id="closeup-bg" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#2D2655" />
+        <stop offset="0.5" stop-color="#37376F" />
+        <stop offset="1" stop-color="#414688" />
+      </linearGradient>
+      <radialGradient id="closeup-glow" cx="0.5" cy="0" r="0.7">
+        <stop offset="0" stop-color="#FF8A1F" stop-opacity="0.16" />
+        <stop offset="1" stop-color="#FF8A1F" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width={frame.width} height={frame.height} fill="url(#closeup-bg)" />
+    <rect width={frame.width} height={frame.height} fill="url(#closeup-glow)" class="closeup-glow" />
+    <path d={path} fill="#000" />
+    <Fragment set:html={asleep} />
+    <Fragment set:html={awake} />
+  </svg>
+  </div>
+  <figcaption class="mt-3 text-center text-sm text-muted-foreground">Люмик спит в чёлке и не тратит процессор. Наведите — проснётся.</figcaption>
+</figure>
+
+<style>
+  .closeup :global(.closeup-awake), .closeup :global(.closeup-asleep), .closeup-glow { transition: opacity 0.4s ease; }
+  .closeup :global(.closeup-awake) { opacity: 0; }
+  .closeup-glow { opacity: 0; }
+  .closeup:hover :global(.closeup-awake), .closeup:hover .closeup-glow { opacity: 1; }
+  .closeup:hover :global(.closeup-asleep) { opacity: 0; }
+</style>
