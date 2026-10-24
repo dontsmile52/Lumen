@@ -7,5 +7,14 @@
     <link>https://lumen.shusti.ru/appcast.xml</link>
     <description>Обновления Lumen</description>
     <language>ru</language>
+    <item>
+      <title>Lumen 0.8.4</title>
+      <pubDate>Sat, 24 Oct 2026 01:06:11 +0000</pubDate>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>0.8.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[]]></description>
+      <enclosure url="https://github.com/dontsmile52/Lumen/releases/download/v0.8.4/Lumen.dmg" type="application/octet-stream" sparkle:edSignature="FvodpUPhH65c9FfpM3mUr+1HIYpzvdSgDX3mriv4b8NZ+7/HqQ2K+VQ/4VUd71qrM/SIj9fCdSsUMwzYI850DA==" length="4531758"/>
+    </item>
   </channel>
 </rss>
