@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import Prose from '../components/Prose.astro';
+import { SITE } from '../config';
 ---
 <!-- Placeholder: Ivan sends the text. -->
 <Base title="Публичная оферта — Lumen" description="Условия покупки Lumen Pro.">
   <Prose title="Публичная оферта" lead="Текст готовится и появится здесь в ближайшее время." sleepy>
-    <p class="text-muted-foreground">Вопросы — в Telegram <a class="text-brand underline underline-offset-4" href="https://t.me/mistshelper">@mistshelper</a>.</p>
+    <p class="text-muted-foreground">Вопросы — в Telegram <a class="text-brand underline underline-offset-4" href={SITE.telegram}>{SITE.telegramName}</a>.</p>
   </Prose>
 </Base>
